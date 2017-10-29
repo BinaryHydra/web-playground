@@ -1,0 +1,53 @@
+
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+<!DOCTYPE html>
+<html>
+<body>
+    <canvas id="myCanvas" width="3000" height="3000"/>
+    <script>
+        var secondTimer = setInterval(redraw,100);
+        var colorChange = -1;
+        var acumulativeChange = 0;
+
+
+        function redraw() {
+            var gridDimention = 100;
+            var gridSize = 10;
+            var canvas=document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+            var matrix = new Array(gridDimention);
+            for (i = 0; i < gridDimention; i++) {
+                for (j = 0; j < gridDimention; j++) {
+                    ctx.beginPath();
+                    ctx.fillStyle='rgb(' + (255/gridDimention) * i+ ',' + (255/gridDimention) * j + ',' +  acumulativeChange+ ')'
+                    ctx.fillRect(gridSize*i,gridSize*j, gridSize, gridSize);
+                    ctx.stroke();
+                }
+            }
+            if (acumulativeChange == 255 || acumulativeChange == 0)
+            colorChange*=-1;
+            acumulativeChange = (acumulativeChange + colorChange);
+            console.log(acumulativeChange);
+        }
+
+       /*            window.onload = function () {
+            var gridDimention = 100;
+            var gridSize = 10;
+            var canvas=document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+            //ctx.lineWidth="1";
+            
+            var matrix = new Array(gridDimention);
+            for (i = 0; i < gridDimention; i++) {
+                for (j = 0; j < gridDimention; j++) {
+                    ctx.beginPath();
+                    ctx.fillStyle='rgb(' + 255/gridDimention * i + ',' + 255/gridDimention * j + ',' +  120 + ')'
+                    ctx.fillRect(gridSize*i,gridSize*j, gridSize, gridSize);
+                    ctx.stroke();
+                    closePath();
+                }
+            }
+        }*/
+    </script>
+</body>
+</html>
