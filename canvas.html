@@ -3,7 +3,7 @@
 <body>
     <canvas id="myCanvas" width="3000" height="3000"/>
     <script>
-        var secondTimer = setInterval(redraw,100);
+        var secondTimer = setInterval(redraw,10);
         var colorChange = -1;
         var acumulativeChange = 0;
 
@@ -17,7 +17,7 @@
             for (i = 0; i < gridDimention; i++) {
                 for (j = 0; j < gridDimention; j++) {
                     ctx.beginPath();
-                    ctx.fillStyle='rgb(' + (255/gridDimention) * i+ ',' + (255/gridDimention) * j + ',' +  acumulativeChange+ ')'
+                    ctx.fillStyle='hsl(' + acumulativeChange + ',' + (100/gridDimention) * i + '%,' + (100/gridDimention) * j + '%   )'
                     ctx.fillRect(gridSize*i,gridSize*j, gridSize, gridSize);
                     ctx.stroke();
                 }
