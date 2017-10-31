@@ -1,23 +1,22 @@
 <!DOCTYPE html>
+<meta charset="UTF-8"> 
 <html>
 <body>
     <canvas id="myCanvas" width="3000" height="3000"/>
     <script>
-        var secondTimer = setInterval(redraw,10);
+        var secondTimer = setInterval(rainDrop,10);
         var colorChange = -1;
         var acumulativeChange = 0;
-
-
+        
         function redraw() {
             var gridDimention = 100;
             var gridSize = 10;
             var canvas=document.getElementById("myCanvas");
             var ctx = canvas.getContext("2d");
-            var matrix = new Array(gridDimention);
             for (i = 0; i < gridDimention; i++) {
                 for (j = 0; j < gridDimention; j++) {
                     ctx.beginPath();
-                    ctx.fillStyle='hsl(' + acumulativeChange + ',' + (100/gridDimention) * i + '%,' + (100/gridDimention) * j + '%   )'
+                    ctx.fillStyle='hsl(' + acumulativeChange + ',' + (100/gridDimention) * i + '%,' + (100/gridDimention) * j + '%   )';
                     ctx.fillRect(gridSize*i,gridSize*j, gridSize, gridSize);
                     ctx.stroke();
                 }
@@ -26,6 +25,25 @@
             colorChange*=-1;
             acumulativeChange = (acumulativeChange + colorChange);
             console.log(acumulativeChange);
+        }
+
+        function colorByHue(hue, lightness){
+            return 'hsl(' + hue +',100%,'+ lightness +'%)';
+        }
+
+        function rainDrop() {
+            var gridDimention = 100;
+            var gridSize = 10;
+            var decay = 5; // color will wanish in 50/decay seconds 
+            var canvas=document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+            var x = Math.random()*gridDimention;
+            var y = Math.random()*gridDimention;
+            var color = Math.random()*255;
+            ctx.beginPath();
+            ctx.fillStyle=colorByHue(color,50);
+            ctx.fillRect(gridSize*x,gridSize*y, gridSize, gridSize);
+            ctx.stroke();
         }
     </script>
 </body>
