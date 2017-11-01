@@ -4,10 +4,10 @@
 <body>
     <canvas id="myCanvas" width="3000" height="3000"/>
     <script>
-        var secondTimer = setInterval(rainDrop,10);
+        var secondTimer = setInterval(rainDrop,0.1);
         var colorChange = -1;
         var acumulativeChange = 0;
-        
+
         function redraw() {
             var gridDimention = 100;
             var gridSize = 10;
@@ -32,18 +32,29 @@
         }
 
         function rainDrop() {
+            var debug = false;
             var gridDimention = 100;
-            var gridSize = 10;
-            var decay = 5; // color will wanish in 50/decay seconds 
+            var gridSize = 30;
+            var decay = 5;
             var canvas=document.getElementById("myCanvas");
             var ctx = canvas.getContext("2d");
+            ctx.globalCompositeOperation= 'xor';//'darken'//'color';//'source-over';
             var x = Math.random()*gridDimention;
             var y = Math.random()*gridDimention;
             var color = Math.random()*255;
             ctx.beginPath();
-            ctx.fillStyle=colorByHue(color,50);
-            ctx.fillRect(gridSize*x,gridSize*y, gridSize, gridSize);
-            ctx.stroke();
+            var gradient = ctx.createRadialGradient(x*gridSize,y*gridSize,gridDimention,x*gridSize,y*gridSize,0);
+            gradient.addColorStop(0,"white");
+            //gradient.addColorStop(1, colorByHue(color,50));
+            gradient.addColorStop(1, 'teal');
+            ctx.fillStyle = gradient;
+            ctx.arc(x*gridSize, y*gridSize, gridDimention*0.9, 0, 2 * Math.PI, false);
+            ctx.fill();
+            if (debug) {
+                ctx.lineWidth = 5;
+                ctx.strokeStyle = '#003300';
+                ctx.stroke();
+            }
         }
     </script>
 </body>
