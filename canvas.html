@@ -1,61 +1,66 @@
 <!DOCTYPE html>
-<meta charset="UTF-8"> 
 <html>
-<body>
-    <canvas id="myCanvas" width="3000" height="3000"/>
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas test</title>
     <script>
-        var secondTimer = setInterval(rainDrop,0.1);
-        var colorChange = -1;
-        var acumulativeChange = 0;
-
-        function redraw() {
-            var gridDimention = 100;
-            var gridSize = 10;
-            var canvas=document.getElementById("myCanvas");
-            var ctx = canvas.getContext("2d");
-            for (i = 0; i < gridDimention; i++) {
-                for (j = 0; j < gridDimention; j++) {
-                    ctx.beginPath();
-                    ctx.fillStyle='hsl(' + acumulativeChange + ',' + (100/gridDimention) * i + '%,' + (100/gridDimention) * j + '%   )';
-                    ctx.fillRect(gridSize*i,gridSize*j, gridSize, gridSize);
+            var secondTimer = setInterval(rainDrop,0.1);
+            var colorChange = -1;
+            var acumulativeChange = 0;
+    
+            function redraw() {
+                var gridDimention = 100;
+                var gridSize = 10;
+                var canvas=document.getElementById("myCanvas");
+                var ctx = canvas.getContext("2d");
+                for (i = 0; i < gridDimention; i++) {
+                    for (j = 0; j < gridDimention; j++) {
+                        ctx.beginPath();
+                        ctx.fillStyle='hsl(' + acumulativeChange + ',' + (100/gridDimention) * i + '%,' + (100/gridDimention) * j + '%   )';
+                        ctx.fillRect(gridSize*i,gridSize*j, gridSize, gridSize);
+                        ctx.stroke();
+                    }
+                }
+                if (acumulativeChange == 255 || acumulativeChange == 0)
+                colorChange*=-1;
+                acumulativeChange = (acumulativeChange + colorChange);
+                console.log(acumulativeChange);
+            }
+    
+            function colorByHue(hue, lightness){
+                return 'hsl(' + hue +',100%,'+ lightness +'%)';
+            }
+    
+            function rainDrop() {
+                var debug = false;
+                var gridDimention = 100;
+                var gridSize = 30;
+                var decay = 5;
+                var canvas=document.getElementById("myCanvas");
+                var ctx = canvas.getContext("2d");
+                ctx.globalCompositeOperation= 'xor';//'darken'//'color';//'source-over';
+                var xRandom = Math.random();
+                var yRandom = Math.random();
+                var x = xRandom*gridDimention;
+                var y = yRandom*gridDimention;
+                var color = Math.sqrt(xRandom*yRandom)*255;
+                ctx.beginPath();
+                var gradient = ctx.createRadialGradient(x*gridSize,y*gridSize,gridDimention,x*gridSize,y*gridSize,0);
+                gradient.addColorStop(0,"white");
+                gradient.addColorStop(1, colorByHue(color,50));
+                //gradient.addColorStop(1, 'teal');
+                ctx.fillStyle = gradient;
+                ctx.arc(x*gridSize, y*gridSize, gridDimention*0.9, 0, 2 * Math.PI, false);
+                ctx.fill();
+                if (debug) {
+                    ctx.lineWidth = 5;
+                    ctx.strokeStyle = '#003300';
                     ctx.stroke();
                 }
             }
-            if (acumulativeChange == 255 || acumulativeChange == 0)
-            colorChange*=-1;
-            acumulativeChange = (acumulativeChange + colorChange);
-            console.log(acumulativeChange);
-        }
-
-        function colorByHue(hue, lightness){
-            return 'hsl(' + hue +',100%,'+ lightness +'%)';
-        }
-
-        function rainDrop() {
-            var debug = false;
-            var gridDimention = 100;
-            var gridSize = 30;
-            var decay = 5;
-            var canvas=document.getElementById("myCanvas");
-            var ctx = canvas.getContext("2d");
-            ctx.globalCompositeOperation= 'xor';//'darken'//'color';//'source-over';
-            var x = Math.random()*gridDimention;
-            var y = Math.random()*gridDimention;
-            var color = Math.random()*255;
-            ctx.beginPath();
-            var gradient = ctx.createRadialGradient(x*gridSize,y*gridSize,gridDimention,x*gridSize,y*gridSize,0);
-            gradient.addColorStop(0,"white");
-            //gradient.addColorStop(1, colorByHue(color,50));
-            gradient.addColorStop(1, 'teal');
-            ctx.fillStyle = gradient;
-            ctx.arc(x*gridSize, y*gridSize, gridDimention*0.9, 0, 2 * Math.PI, false);
-            ctx.fill();
-            if (debug) {
-                ctx.lineWidth = 5;
-                ctx.strokeStyle = '#003300';
-                ctx.stroke();
-            }
-        }
-    </script>
+        </script>
+</head>        
+<body>
+    <canvas id="myCanvas" width="3000" height="3000"/>
 </body>
 </html>
