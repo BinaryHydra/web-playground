@@ -1,0 +1,13 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+div.square {
+    background-color: rgb(0, 0, 255);
+    position: relative;
+    padding-top: 35%;
+    height: 50%;
+    transform: rotate(45deg);
+}
