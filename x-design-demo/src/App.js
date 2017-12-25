@@ -4,9 +4,9 @@ import './index.css'
 class App extends Component {
   render() {
     return (
-      <div>
-        <div className="square"/>
-        <div className="circle"/>
+      <div className="centered">
+        <div className="square top"/>
+        <div className="square bottom"/>
       </div>
     );
   }
