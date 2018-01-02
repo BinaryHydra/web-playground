@@ -4,21 +4,69 @@ body {
   font-family: sans-serif;
 }
 
-div.square {
-    background-color: rgb(0, 0, 255);
-    position: absolute;
-    width: 36.5vw;
-    height: 36.5vw;
-    margin-left: 25%;
-  
-    transform: rotate(45deg);
+.triangle {
+  position: absolute;
+  width: 0;
+  height: 0;
+  z-index: 0;
 }
 
-div.square.top {
-    margin-top:-18.3%;
+.square {
+  width: 50px;
+  height: 50px;
+  color: dodgerblue
 }
 
+.inside {
+  position: absolute;
+  z-index: -1;
+}
 
-div.square.bottom {
-  margin-top:33%;
+.triangle.top {
+  border-left: 50vw solid transparent;
+  border-right: 50vw solid transparent;
+  border-top: 50vh solid red;
+}
+
+.inside.top {
+  margin-top: -50vh;
+  margin-left: -20vw;
+}
+
+.hoverable.top{
+}
+.hoverable.top:hover {
+  border-top: 50vh solid blue !important;
+
+  animation: reduce-top 5s forwards;
+}
+
+@keyframes reduce-top {
+  100% {
+    width: 100%;
+    height: 100%;
+    border-width: 30px;
+    color: green;
+    z-index: 9;
+  }
+}
+
+.triangle.left {
+  border-top: 50vh solid transparent;
+  border-bottom: 50vh solid transparent;
+  border-left: 50vw solid green;
+}
+
+.triangle.right {
+  border-top: 50vh solid transparent;
+  border-bottom: 50vh solid transparent;
+  border-right: 50vw solid orange;
+  margin-left: 50vw;
+}
+
+.triangle.bottom {
+  margin-top: 49.9999vh;
+  border-left: 50vw solid transparent;
+  border-right: 50vw solid transparent;
+  border-bottom: 50vh solid blue;
 }
